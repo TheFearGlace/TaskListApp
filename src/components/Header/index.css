@@ -1,0 +1,13 @@
+.header-box>h1 {
+    display: inline;
+}
+.header-box>h6 {
+    float: right;
+    margin-bottom: 10px;
+    position: relative;
+    top: 20px;
+}
+
+.header-box>h6>span:first-child {
+    margin-right: 4px;
+}
