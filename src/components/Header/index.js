@@ -4,7 +4,6 @@ import './index.css'
 export default class Header extends Component {
     render () {
         const { left, done } = this.props
-        console.log(done)
         return (
             <div className="header-box">
                 <h1>Work List</h1>

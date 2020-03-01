@@ -14,7 +14,8 @@ export default class App extends Component {
             {id: 1, label: 'todo 1', status: false},
             {id: 2, label: 'todo 2', status: false},
             {id: 3, label: 'todo 3', status: false}
-        ]
+        ],
+        searchValue: ''
     }
 
     deleteELement = (id) => {
@@ -61,16 +62,31 @@ export default class App extends Component {
         })
     }
 
+
+    searchElement = (elem, text) => {
+        if(text.length === 0) {
+            return elem
+        }
+        return elem.filter((item) => {
+            return item.label.toLowerCase().indexOf(text.toLowerCase()) > -1
+        })
+    }
+
+    onSearchElem = (searchValue) => {
+        this.setState({ searchValue })
+    }
+
     render () {
-        const { data } = this.state
+        const { data, searchValue } = this.state
         const done = data.filter((el) => el.status).length
         const left = data.length - done
+        const foundElements = this.searchElement(data, searchValue)
         return (
             <div>
                 <Header left={left} done={done} />
-                <Search />
+                <Search onSearchElem={this.onSearchElem} />
                 <StatusFilter />
-                <WorkList dataList={data}
+                <WorkList dataList={foundElements}
                 onDeleted={this.deleteELement}
                 onStatusDone={this.onStatusDone} />
                 <EditList addOne={this.addElement} />
