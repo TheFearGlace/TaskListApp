@@ -1,0 +1,22 @@
+.status-checkbox {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.list-group-item>span {
+    vertical-align: -webkit-baseline-middle;
+}
+
+.list-group-item>span>button {
+    width: 30px;
+}
+
+.list-group-item>span>button:last-child {
+    margin-right: 10px;
+}
+
+.status-checkbox {
+    position: relative;
+    top: 5px;
+}

@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './index.css'
 
-const Header = () => {
-    return (
-        <div className="header-box">
-            <h1>Work List</h1>
-            <h6>
-                <span className="badge badge-secondary">1 - left</span>
-                <span className="badge badge-success">3 - done</span>
-            </h6>
-        </div>
-    )
+export default class Header extends Component {
+    render () {
+        const { left, done } = this.props
+        console.log(done)
+        return (
+            <div className="header-box">
+                <h1>Work List</h1>
+                <h6>
+                    <span className="badge badge-secondary">{left} - left</span>
+                    <span className="badge badge-success">{done} - done</span>
+                </h6>
+            </div>
+        )
+    }
 }
-
-export default Header

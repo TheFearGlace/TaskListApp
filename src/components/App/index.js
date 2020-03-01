@@ -1,27 +1,80 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import './index.css'
 import Header from '../Header'
 import Search from '../Search'
-import WorkList from '..//WorkList'
-import StatusFilter from '..//StatusFilter'
+import WorkList from '../WorkList'
+import StatusFilter from '../StatusFilter'
+import EditList from '../EditList'
 
-const App = () => {
+export default class App extends Component {
 
-    const data = [
-        {id: 1, label: 'todo 1', status: false},
-        {id: 2, label: 'todo 2', status: true},
-        {id: 3, label: 'todo 3', status: false}
-    ]
+    state = {
+        data: [
+            {id: 1, label: 'todo 1', status: false},
+            {id: 2, label: 'todo 2', status: false},
+            {id: 3, label: 'todo 3', status: false}
+        ]
+    }
 
-    return (
-    <div>
-        <Header />
-        <Search />
-        <StatusFilter />
-        <WorkList dataList={data} />
-    </div>
-    )
+    deleteELement = (id) => {
+        this.setState(({ data }) => {
+            const index = data.findIndex((el) => el.id === id)
+            const newResult = [
+                ...data.slice(0,index), 
+                ...data.slice(index+1)
+            ]
+            return {
+                data: newResult
+            }
+        })
+    }
+
+    addElement = (text) => {
+        this.setState(({ data }) => {
+            const newRow = {
+                id: data.length+1,
+                label:text,
+                status:false,
+            }
+            const newArr = [...data, newRow]
+            return {
+                data: newArr
+            }
+        })
+    }
+
+    onStatusDone = (id) => {
+        this.setState(({ data }) => {
+            const index = data.findIndex((el) => el.id === id)
+
+            const oldElement = data[index]
+            const newRow = { ...oldElement, status:!oldElement.status}
+            const newResult = [
+                ...data.slice(0,index),
+                newRow, 
+                ...data.slice(index+1)
+            ]
+            return {
+                data: newResult
+            }
+        })
+    }
+
+    render () {
+        const { data } = this.state
+        const done = data.filter((el) => el.status).length
+        const left = data.length - done
+        return (
+            <div>
+                <Header left={left} done={done} />
+                <Search />
+                <StatusFilter />
+                <WorkList dataList={data}
+                onDeleted={this.deleteELement}
+                onStatusDone={this.onStatusDone} />
+                <EditList addOne={this.addElement} />
+            </div>
+        )
+    }
 }
-
-export default App
